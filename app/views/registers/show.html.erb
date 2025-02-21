@@ -1,0 +1,227 @@
+<style>
+  body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f4f4f4;
+  }
+
+  #id-card {
+      color: black;
+      width: 197px;
+      height: 317px;
+      background: white;
+      text-align: center;
+      padding: 10px;
+      border-radius: 10px; 
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start; 
+      align-items: center;
+      border: 2px solid #333;
+      position: relative;
+      background-image: url('/images/background.png');
+      background-size: cover; 
+      background-position: center;
+      overflow: hidden; 
+  }
+
+  .id-header, .id-footer {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      background-size: cover;
+      background-position: center;
+      z-index: 1;
+      border-radius: 1px;
+  }
+
+  .id-header {
+      top: -10px;  
+      height: 25%;
+      background-image: url('/images/head.png');
+  }
+
+  .id-footer {
+      bottom: -10px; 
+      height: 25%;  
+      opacity: 45%;
+      background-image: url('/images/foot.png');
+  }
+
+  .id-header .logo, .id-header .asenso {
+      position: absolute;
+      z-index: 2;
+  }
+
+  .id-header .logo {
+      top: 15px;
+      left: 12px;
+      width: 30px; 
+      height: auto;
+  }
+
+  .id-header .asenso {
+      top: 40px;
+      left: 12px;
+      width: 30px; 
+      height: auto;
+  }
+
+  .id-header .designation h2 {
+      position: absolute;
+      top: 65px;
+      left: 50%; 
+      transform: translate(-50%, -50%);
+      font-size: 16px;
+      color: #f4f4f4;
+      font-family: 'Berlin Sans FB Demi', sans-serif;
+  }
+
+  .id-photo {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 70px; 
+  }
+
+  .id-photo img {
+      width: 72px;
+      height: 72px;
+      border-radius: 15px;
+      border: 3px solid #333;
+      object-fit: cover;
+  }
+
+  .qr-code-container svg {
+    width: 72;
+    height: 72px;
+  }
+
+  .enu-name {
+      margin-top: 10px; 
+      font-size: 18px;
+    
+  }
+  .enu-name h2 {
+      margin: 1px 0;
+      font-size: 18px;
+      font-weight: bold;
+      font-family:Arial, Helvetica, sans-serif
+  }
+  .enu-name h3 {
+      margin: 1px 0;
+      font-size: 16px;
+      font-family:Arial, Helvetica, sans-serif
+  }
+  .id-info {
+      margin-top: 10px; 
+      font-size: 18px;
+  }
+
+  .id-info h2 {
+      margin: 3px 0;
+      font-size: 20px;
+      font-family: 'Berlin Sans FB Demi', sans-serif;
+  }
+
+  .id-info h3 {
+      margin: 3px 0;
+      font-size: 14px;
+      font-family: 'Berlin Sans FB Demi', sans-serif;
+  }
+
+  .id-info h4 {
+      margin: 5px 0;
+      font-size: 8px;
+      font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .id-info p {
+      margin: 3px 0;
+      font-size: 18px;
+      font-size: 6px;
+      color: #555;
+      font-family: Arial, Helvetica, sans-serif;
+      opacity: 80%;
+  }
+
+  #dl-id {
+    position: absolute;
+    bottom: 75%;
+  }
+
+  #go-home {
+    position: absolute;
+    bottom: 83%;
+  }
+
+  #go-edit {
+    position: absolute;
+    bottom: 88%;
+  }
+</style>
+
+<% if flash[:notice] %>
+  <div class="fixed-top py-2 text-center text-uppercase text-white bg-danger">
+    <%= flash[:notice] %>
+  </div>
+<% end %>
+
+<div id="id-card">
+  
+  <div class="id-header">
+    <img src="/images/logo.png" alt="Company Logo" class="logo">
+    <img src="/images/asensophlogo.jpg" alt="Company Logo" class="asenso">
+
+    <div class="designation">
+      <h2>ENUMERATOR</h2>
+    </div>
+  </div>
+  
+  
+  <div class="id-photo">
+    <img src="<%= url_for(@profile.profile_image) %>" alt="Photo">
+    <%= image_tag(@qr.to_data_url) %>
+  </div>
+  
+  <div class="enu-name">
+      <h2><%= @profile.lastname.upcase %></h2>
+      <h3><%= @profile.firstname.upcase %></h3>
+  </div>
+
+  <div class="id-info">
+      <h4><%= @profile.address.upcase %></h4>
+      <p>ADDRESS</p>
+
+      <h4><%= @profile.birthdate.to_date.to_fs(:long).upcase %></h4>
+      <p>BIRTH DATE</p>
+      
+      <h4><%= @profile.contactnumber %></h4>
+      <p>CONTACT NUMBER</p>
+  </div>
+    
+  <div class="id-footer"></div>
+</div>
+
+<button id="dl-id" class="btn btn-danger text-uppercase" onclick="downloadID()">[DOWNLOAD YOUR ID]</button>
+<a href="<%= edit_profile_path(@profile.id) %>" id="go-edit" class="btn btn-link text-uppercase text-decoration-none">[ EDIT YOUR INFO ]</a>
+<a href="/" id="go-home" class="btn btn-link text-uppercase text-decoration-none">[ RETURN TO HOME ]</a>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<script>
+  function downloadID() {
+    const element = document.getElementById("id-card");
+
+    html2canvas(element).then(canvas => {
+      const image = canvas.toDataURL("image/png");
+      const link = document.createElement("a");
+      link.href = image;
+      link.download = "enumerators_id.png";
+      link.click();
+    });
+  }
+</script>

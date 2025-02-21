@@ -1,0 +1,32 @@
+<div class="container-fluid py-5">
+
+  <br />
+
+  <div class="row pt-5">
+    <div class="col-sm-12 col-md-4 offset-md-4">
+
+      <div class="text-center mb-3">
+        <a class="btn btn-link text-uppercase text-decoration-none" href="<%= root_path() %>">[ < back ]</a>
+      </div>
+
+      <h4 class="text-center fw-bold mb-3 text-uppercase">
+        [ ENUMERATORs DATA SUMMARY ]
+      </h4>
+
+      <h2 class="text-center fw-bold mb-3 text-uppercase">
+        t = <%= number_with_delimiter(@all_enumerator.count) %>...
+      </h2>
+
+      <ul>
+        <li class="text-uppercase">ASUNCION ............. <%= number_with_delimiter(@asn.count) %> 
+        <li class="text-uppercase">KAPALONG ............. <%= number_with_delimiter(@kap.count) %> 
+        <li class="text-uppercase">NEW CORELLA .......... <%= number_with_delimiter(@nc.count) %> 
+        <li class="text-uppercase">SAN ISIDRO ........... <%= number_with_delimiter(@si.count) %> 
+        <li class="text-uppercase">TAGUM CITY ........... <%= number_with_delimiter(@tag.count) %> 
+        <li class="text-uppercase">TALAINGOD ............ <%= number_with_delimiter(@tal.count) %> 
+        <li class="text-uppercase">Unknown ADDRESS ...... <%= number_with_delimiter(@noadd.count) %> 
+      </ul>
+
+      <p class="text-center text-uppercase mt-5">--== as of <%= Time.now.strftime("%B %d, %Y %I:%M:%S %p").upcase %> ==--</p>
+  </div>
+</div>

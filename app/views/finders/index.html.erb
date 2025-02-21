@@ -1,0 +1,42 @@
+<% if flash[:notice] %>
+  <div class="fixed-top py-2 text-center text-uppercase text-white bg-danger">
+    <%= flash[:notice] %>
+  </div>
+<% end %>
+
+<div class="container-fluid py-5">
+
+  <br />
+
+  <div class="row pt-5">
+  
+  <%= form_tag lookup_path(), method: :post do %>
+
+    <div class="col-sm-12 col-md-4 offset-md-4 mt-5">
+
+      <h3 class="text-center fw-bold mb-4">
+        <span class="text-info">Asenso</span> <span class="text-danger">Pilipinas</span>
+      </h3>
+
+      <h6 class="text-center fw-bold mb-3">[ SEARCH ENUMERATOR ]</h6>
+
+      <div class="form-floating mb-3">
+        <input 
+          type="text" 
+          name="enum_name" 
+          class="form-control text-center text-uppercase" 
+          id="floatingInput"
+          required>
+
+        <label for="floatingInput" class="text-uppercase">enter your name</label>
+      </div>
+
+      <div class="d-flex justify-content-between">
+        <a class="btn btn-link text-uppercase text-decoration-none" href="<%= new_profile_path() %>">[ REGISTER ]</a>
+        <button class="btn btn-outline-danger text-uppercase" type="submit">[ SEARCH ]</button>
+      </div>    
+
+    </div>
+
+  <% end %>
+</div>

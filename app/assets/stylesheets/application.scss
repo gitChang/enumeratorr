@@ -1,0 +1,10 @@
+@import "bootstrap";
+
+body {
+  font-family: "Courier New", monospace, "Poppins", sans-serif;
+}
+
+li.list-inline-item.nl:not(:last-child):after {
+  content: " | ";
+  color: #8a8a8a;
+}

@@ -1,0 +1,160 @@
+<% if flash[:notice] %>
+  <div class="fixed-top py-2 text-center text-uppercase text-white bg-danger">
+    <%= flash[:notice] %>
+  </div>
+<% end %>
+
+<div class="container-fluid py-5">
+
+  <br />
+
+  <div class="row">
+
+    <%= form_with(model: @profile, url: create_profile_path(), local: true, data: { turbo: false }, html: { multipart: true }) do %>
+
+      <div class="col-sm-12 col-md-4 offset-md-4">
+
+        <div class="text-center mb-3">
+          <a class="btn btn-link text-uppercase text-decoration-none" href="<%= root_path() %>">[ < back ]</a>
+        </div>
+
+        <h6 class="text-center fw-bold mb-3">
+          [ NEW | ENUMERATOR'S PROFILE ]
+        </h6>
+
+        <div class="mb-4 d-flex justify-content-center">
+          <img id="selectedImage"
+              class="img-thumbnail" 
+              style="height: 200px; width: 200px; object-fit: fit;"
+              src="https://mdbootstrap.com/img/Photos/Others/placeholder.jpg" 
+              alt="example placeholder" />
+        </div>
+
+        <div class="mb-3">
+          <input class="form-control" 
+                name="profile[profile_image]"
+                type="file" 
+                id="formFile" 
+                onchange="displaySelectedImage(event, 'selectedImage')"
+                required>
+        </div>  
+
+        <br />   
+
+        <div class="form-floating mb-3">
+          <input 
+            type="text" 
+            name="profile[lastname]" 
+            class="form-control text-center text-uppercase" 
+            id="floatingInput"
+            required>
+
+          <label for="floatingInput" class="text-uppercase">last name *</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input 
+            type="text" 
+            name="profile[firstname]" 
+            class="form-control text-center text-uppercase" 
+            id="floatingInput"
+            required>
+
+          <label for="floatingInput" class="text-uppercase">first name *</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input 
+            type="text" 
+            name="profile[middlename]" 
+            class="form-control text-center text-uppercase" 
+            id="floatingInput">
+
+          <label for="floatingInput" class="text-uppercase">middle name (leave blank if n/a)</label>
+        </div>
+
+        <br />
+
+        <div class="form-floating mb-3">
+          <input 
+            type="date" 
+            name="profile[birthdate]" 
+            class="form-control text-center text-uppercase" 
+            id="floatingInput"
+            required>
+
+          <label for="floatingInput" class="text-uppercase">date of birth *</label>
+        </div>
+        
+        <div class="form-floating mb-3">
+          <select name="profile[sex]" class="form-select text-center text-uppercase" id="floatingSelect" required>
+            <option value="" selected>--select--</option> 
+            <option value="male">male</option>
+            <option value="female">female</option>                                
+          </select>
+          <label for="floatingSelect" class="text-uppercase">gender *</label>
+        </div>
+
+        <br />
+
+        <div class="form-floating mb-3">
+          <textarea style="height: 100px"
+            name="profile[address]" 
+            class="form-control text-center text-uppercase" 
+            id="floatingInput" required></textarea>
+
+          <label for="floatingInput" class="text-uppercase">address *</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input 
+            pattern="09[0-9]{9}" 
+            maxlength="11"
+            type="text" 
+            name="profile[contactnumber]" 
+            class="form-control text-center text-uppercase" 
+            id="floatingInput"
+            required>
+
+          <label for="floatingInput" class="text-uppercase">contact no. *</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input 
+            type="email" 
+            name="profile[email]" 
+            class="form-control text-center text-lowercase" 
+            id="floatingInput">
+
+          <label for="floatingInput" class="text-uppercase">email address (leave blank if n/a)</label>
+        </div> 
+
+        <br />
+
+        <!-- Save Button -->
+        <div class="d-flex justify-content-between">
+          <a class="btn btn-link text-uppercase text-decoration-none" href="<%= root_path() %>">[ < back ]</a>                          
+          <button class="btn btn-outline-danger text-uppercase" type="submit">[ submit ]</button>
+        </div>
+    <% end %>
+
+  </div>
+
+</div>
+
+<script>
+  function displaySelectedImage(event, elementId) {
+    const selectedImage = document.getElementById(elementId);
+    const fileInput = event.target;
+
+    if (fileInput.files && fileInput.files[0]) {
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            selectedImage.src = e.target.result;
+        };
+
+        reader.readAsDataURL(fileInput.files[0]);
+    }
+  }
+</script>
