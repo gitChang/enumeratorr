@@ -32,6 +32,12 @@ Ensure you have the following installed:
   ```
   Install from the [PostgreSQL website](https://www.postgresql.org/download/).
 
+- **Levenshtein Extension for PostgreSQL** - Used for fuzzy string matching.
+  Install it by running:
+  ```bash
+  CREATE EXTENSION IF NOT EXISTS fuzzystrmatch;
+  ```
+
 ## Installation
 
 1. Clone the repository:
