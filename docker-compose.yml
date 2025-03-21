@@ -1,0 +1,12 @@
+services:
+  web:
+    build: .
+    volumes:
+      - .:/enumeratorr
+    ports:
+      - "3003:3003"
+    environment:
+      RAILS_ENV: development
+      DATABASE_URL: postgres://enumeratorr:enumeratorr.pwd@192.168.1.25:5432/enumeratorr_development
+    tty: true
+    stdin_open: true

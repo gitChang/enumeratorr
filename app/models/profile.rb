@@ -5,18 +5,34 @@ class Profile < ApplicationRecord
   before_validation :set_fullname
 
 
+  validate :acceptable_image
+
   validates :lastname, presence: true
   validates :firstname, presence: true
-
   validates :birthdate, presence: true
   validates :sex, presence: true
-
   validates :contactnumber, presence: true
   
   validate  :fullname_uniqueness
 
 
   private
+
+
+  def acceptable_image
+    return unless profile_image.attached?
+
+    # Validate file size (5MB limit)
+    if profile_image.blob.byte_size > 5.megabytes
+      errors.add(:profile_image, "is too large. Maximum size is 5MB.")
+    end
+
+    # Validate content type
+    unless profile_image.content_type.in?(%w(image/jpeg image/png))
+      errors.add(:profile_image, "must be a JPG or PNG file.")
+    end
+  end
+
 
   def middlename_na
     self.middlename = "" if middlename.present? && middlename.strip.downcase == "n/a"

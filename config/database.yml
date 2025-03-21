@@ -36,7 +36,7 @@ development:
   # domain socket that doesn't need configuration. Windows does not have
   # domain sockets, so uncomment these lines.
   # host: 192.168.0.110
-  host: 192.168.0.122
+  host: 192.168.1.25
 
   # The TCP port the server listens on. Defaults to 5432.
   # If your server runs on a different port number, change accordingly.
